@@ -9,7 +9,13 @@ public class CydeoApp {
         ApplicationContext container = new AnnotationConfigApplicationContext(ConfigApp.class,ConfigAny.class);
 
         FullTimeMentor ft = container.getBean(FullTimeMentor.class);
+//        PartTimeMentor pt1 = container.getBean("p1",PartTimeMentor.class);//assigning name to bean
+//        PartTimeMentor pt2 = container.getBean("p2",PartTimeMentor.class);
+        PartTimeMentor pt = container.getBean(PartTimeMentor.class);
+        pt.createAccount();
         ft.createAccount();
+//        pt1.createAccount();
+//        pt2.createAccount();
         String str = container.getBean(String.class);
         System.out.println(str);
 
