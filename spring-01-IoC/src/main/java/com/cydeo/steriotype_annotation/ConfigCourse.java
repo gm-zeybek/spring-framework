@@ -4,6 +4,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan
+//@ComponentScan
+@ComponentScan(basePackages = "com.cydeo")// if the pojos are not same packages
 public class ConfigCourse {
 }
