@@ -15,7 +15,7 @@
     <name>spring-short2</name>
     <description>spring-short2</description>
     <modules>
-        <module>spring-003-core-DI</module>
+        <module>spring-03-core-DI</module>
     </modules>
     <properties>
         <java.version>17</java.version>
