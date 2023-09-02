@@ -14,6 +14,6 @@ public class CydeoApp {
 
         ApplicationContext context = new AnnotationConfigApplicationContext(ProjectConfig.class);
         CommentService commentService = context.getBean(CommentService.class);
-        commentService.publisComment(comment);
+        commentService.publishComment(comment);
     }
 }

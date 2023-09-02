@@ -19,8 +19,9 @@ public class CommentService {
         this.commentNotificationProxy = commentNotificationProxy;
     }
 
-    public void publisComment(Comment comment){
+    public void publishComment(Comment comment){
         this.commentRepository.storeComment(comment);
         this.commentNotificationProxy.sendComment(comment);
     }
+
 }
