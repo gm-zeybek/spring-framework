@@ -17,6 +17,7 @@
     <modules>
         <module>spring-03-core-DI</module>
         <module>spring-review-IoC</module>
+        <module>spring-review-project</module>
     </modules>
     <properties>
         <java.version>17</java.version>
