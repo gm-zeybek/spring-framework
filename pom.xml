@@ -16,6 +16,7 @@
     <description>spring-short2</description>
     <modules>
         <module>spring-03-core-DI</module>
+        <module>spring-06-springboot-demo</module>
     </modules>
     <properties>
         <java.version>17</java.version>
