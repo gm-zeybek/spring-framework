@@ -11,8 +11,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
+@RequestMapping("student")
 public class StudentController {
-    @RequestMapping("/welcome")
+    @RequestMapping("/welcome")  // localhost:8080/student/welcome
     public String homePage(Model model){  // Call Model as an argument and call methods
         // values coming from inside the method and not visible from another method
         model.addAttribute("name", "Cydeo");

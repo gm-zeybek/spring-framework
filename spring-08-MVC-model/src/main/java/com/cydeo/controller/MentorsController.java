@@ -10,8 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/mentor")    // class level mapping
 public class MentorsController {
-    @RequestMapping("/mentors")
+    @RequestMapping("/list")  // method level mapping localhost:8080/mentor/list
     public String table(Model model){
         Students student1 = new Students("Mike", "Smith",15, Gender.MALE);
         Students student2 = new Students("Olivia", "Smith",17, Gender.FEMALE);
