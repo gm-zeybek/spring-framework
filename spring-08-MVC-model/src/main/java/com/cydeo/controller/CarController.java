@@ -19,7 +19,7 @@ public class CarController {
         return "car/car-info";
     }
 
-    @RequestMapping("/carinfo/{make}/{year}")// make path parameter
+    @RequestMapping("/carinfo/{make}/{year}")// make path parameter  (path variable is not optional)
     public String carInfo2(@PathVariable String make, @PathVariable Integer year, Model model){
         model.addAttribute(make);
         model.addAttribute(year);
