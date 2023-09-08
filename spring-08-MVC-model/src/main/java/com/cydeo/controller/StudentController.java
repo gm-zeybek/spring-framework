@@ -1,5 +1,6 @@
 package com.cydeo.controller;
 
+import com.cydeo.model.Student;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class StudentController {
@@ -26,6 +28,8 @@ public class StudentController {
         list.add(8);
         model.addAttribute("numbers", list);
 
+        Student student = new Student(UUID.randomUUID(), "Mike", "Smith");
+        model.addAttribute("student", student);
         return "/student/welcome"; // NO HTML ANYMORE SINCE IT IS USING THYMELEAF
     }
 }
