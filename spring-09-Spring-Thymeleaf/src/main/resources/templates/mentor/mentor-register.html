@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Index</title>
+</head>
+<body>
+<form th:action="@{/mentor/confirm}" method="post" th:object="${mentor}">
+<!--  // assigned <object> here // in one form only one object is allowed-->
+
+<label>first name</label>
+<input type="text" id="firstname" th:field="*{firstName}"><br>
+<label>last name</label>
+<input type="text" id="lastname" th:field="*{lastName}"><br>
+  <label>email</label>
+  <input type="email" id="email" th:field="*{email}"><br>
+
+  <label>graduated</label>
+  <input type="checkbox" id="graduated" th:field="*{graduated}"><br>
+
+  <label>gender</label>
+  <input type="radio" value="Male" th:field="*{gender}">Male
+  <input type="radio" value="Female" th:field="*{gender}">Female<br>
+
+  <label>batch Name</label>
+  <select th:field="*{batch}">
+    <option th:each="theBatch: ${batchList}" th:value="${theBatch}" th:text="${theBatch}"></option>
+  </select><br>
+  <label>Company</label>
+  <textarea th:field="*{company}" ></textarea><br>
+  <label>submit</label>
+  <button type="submit" >register</button>
+
+</form>
+</body>
+</html>
