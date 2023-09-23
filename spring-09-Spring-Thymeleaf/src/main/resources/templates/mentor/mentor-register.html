@@ -5,10 +5,13 @@
   <title>Index</title>
 </head>
 <body>
+<!--th:action used for send the form after click submit button -->
+<!--method ="post" is shows this form used for post data -->
+<!--th:object ="${mentor}" is used for capturing object from controller class-->
 <form th:action="@{/mentor/confirm}" method="post" th:object="${mentor}">
 <!--  // assigned <object> here // in one form only one object is allowed-->
-
 <label>first name</label>
+<!--  th:field="*{fieldName}" th field with star and paranthesis for capturing object fields-->
 <input type="text" id="firstname" th:field="*{firstName}"><br>
 <label>last name</label>
 <input type="text" id="lastname" th:field="*{lastName}"><br>
@@ -24,6 +27,7 @@
 
   <label>batch Name</label>
   <select th:field="*{batch}">
+<!--    th:each for iterate, th:value=${} and th:text="${}" for dropdown fields-->
     <option th:each="theBatch: ${batchList}" th:value="${theBatch}" th:text="${theBatch}"></option>
   </select><br>
   <label>Company</label>
