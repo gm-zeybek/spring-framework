@@ -22,12 +22,16 @@ public class Employee extends BaseEntity{
     private String email;
     @Column(columnDefinition = "DATE")
     private LocalDate hireDate;
-    @OneToOne
-    @JoinColumn  // rename the join name instead of department
+    @OneToOne(cascade = CascadeType.ALL)
+//    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @JoinColumn(name = "department_id")  // rename the join name instead of department
     private Department department;
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private int salary;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "region_id")
+    private Region region;
 
 
     public Employee(String firstName, String lastName, String email, LocalDate hireDate, Gender gender, int salary) {
