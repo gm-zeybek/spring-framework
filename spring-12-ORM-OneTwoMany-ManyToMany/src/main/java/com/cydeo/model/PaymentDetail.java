@@ -1,10 +1,10 @@
 package com.cydeo.model;
 
-import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
 
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 public class PaymentDetail {
-    @jakarta.persistence.Id
+    @Id
     private Long Id;
     private BigDecimal merchantPayoutAmount;
     private BigDecimal commissionAmount;
