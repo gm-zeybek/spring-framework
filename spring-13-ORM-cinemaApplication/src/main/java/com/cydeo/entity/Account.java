@@ -1,7 +1,7 @@
 package com.cydeo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.cydeo.enums.UserRole;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,5 +10,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "account_details")
 public class Account extends BaseEntity{
+
+    private String name;
+    private String address;
+    private String country;
+    private String state;
+    private String city;
+    private Integer age;
+    private String postalCode;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole =UserRole.USER;
+    @OneToOne(mappedBy = "account")
+    private User user;
 
 }
