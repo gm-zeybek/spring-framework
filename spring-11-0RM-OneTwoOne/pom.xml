@@ -14,7 +14,7 @@
 	<name>spring-11-0RM-OneTwoOne</name>
 	<description>spring-11-0RM-OneTwoOne</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
