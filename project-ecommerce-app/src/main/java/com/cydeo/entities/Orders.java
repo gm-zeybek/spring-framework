@@ -15,9 +15,9 @@ import java.math.BigInteger;
 public class Orders extends BaseEntity{
     private BigDecimal paidPrice;
     private BigDecimal totalPrice;
-    private BigInteger cartId;
-    private BigInteger customerId;
-    private BigInteger paymentId;
+    private Long cartId;
+    private Long customerId;
+    private Long paymentId;
 
 
 }

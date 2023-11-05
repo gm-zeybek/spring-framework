@@ -18,7 +18,7 @@ public class Balance extends BaseEntity{
 
     private BigDecimal amount;
     @OneToOne
-    private BigInteger customerId;
+    private Customer customer;
 
 
 }
