@@ -1,19 +1,18 @@
 package com.cydeo.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
 @Entity
-@Table(name = "orders")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Product extends BaseEntity{
 
@@ -22,7 +21,10 @@ public class Product extends BaseEntity{
     private Integer quantity;
     private Integer remainingQuantity;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
+    @JoinTable(name = "product_category_rel",
+            joinColumns = @JoinColumn(name = "p_id"),
+            inverseJoinColumns = @JoinColumn(name = "c_id"))
+    private List<Category> categoryList;
 
-    private List<Category> category;
 }

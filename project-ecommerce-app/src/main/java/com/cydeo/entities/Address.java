@@ -4,13 +4,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigInteger;
 
 @Entity
-@Table(name = "orders")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Address extends BaseEntity{
     private String name;

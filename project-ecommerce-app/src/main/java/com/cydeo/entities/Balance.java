@@ -5,14 +5,16 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Entity
-@Table(name = "orders")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Balance extends BaseEntity{
 
