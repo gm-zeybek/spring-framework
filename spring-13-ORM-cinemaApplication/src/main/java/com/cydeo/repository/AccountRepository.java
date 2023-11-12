@@ -3,6 +3,7 @@ package com.cydeo.repository;
 import com.cydeo.entity.Account;
 import com.cydeo.enums.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.rmi.dgc.Lease;
@@ -32,12 +33,28 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     List<Account> findAllByOrderByAgeDesc();
 
     // ------------------- JPQL QUERIES ------------------- //
+    // the biggest difference between the derive and and native queries with JPQL queries
+    // JPQL queries works fine if migrate into any other databasd provider
+    // use @Query("") method name doesn't matter
+    // basic keypoint is we declare an object of class like java and use this for setup a connection
+    // like: SELECT d FROM Department d WHERE d.name =?1
+    // then =?1 refers to parameter order like =?2 refers to second parameter
+    // or  =:salary we can use directly parameter name after colon and use this parameter with @Param("salary") int salary
+    // should use entity name as a columns instead of table name in sql in contrast of native
 
     //Write a JPQL query that returns all accounts
 
+
+    @Query("SELECT a FROM Account a")
+    List<Account> getAllAccounts();
+
     //Write a JPQL query to list all admin accounts
+    @Query("SELECT a FROM Account a WHERE a.userRole='ADMIN'")
+    List<Account> getAllAdminAccounts();
 
     //Write a JPQL query to sort all accounts with age
+    @Query("SELECT a FROM Account a ORDER BY a.age DESC ")
+    List<Account> getSortedAllAccountsInDesc();
 
     // ------------------- Native QUERIES ------------------- //
 
