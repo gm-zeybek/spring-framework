@@ -5,13 +5,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.aspectj.weaver.loadtime.definition.Definition;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class MovieCinema extends BaseEntity {
 
@@ -22,4 +25,10 @@ public class MovieCinema extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)  // default fetch type differentiate based on type many or one
     private Cinema cinema;
 
+    @Override
+    public String toString() {
+        return "MovieCinema{" +
+                "dateTime=" + dateTime +
+                '}';
+    }
 }
