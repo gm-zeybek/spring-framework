@@ -4,6 +4,7 @@ import com.cydeo.entity.Account;
 import com.cydeo.enums.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.rmi.dgc.Lease;
@@ -57,11 +58,20 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     List<Account> getSortedAllAccountsInDesc();
 
     // ------------------- Native QUERIES ------------------- //
+    // first think is inside the @Query(value = "query goes here", nativeQuery = true)
+    // table name and columns names are same with the database
+
 
     //Write a native query to read all accounts with an age lower than a specific value
+    @Query(value = "SELECT * FROM account_details age <:inputAge", nativeQuery = true)
+    List<Account> fetchAllAccountsAgeLessThan(@Param("inputAge") Integer age);
 
     //Write a native query to read all accounts that a specific value can be containable in the name, address, country, state city
+    // ILIKE IS CASE SENSITIVE OF LIKE LOOKING FOR PATTERN
+    // IF ELSE IN ORACLE DATABASE LOWER(name) LIKE LOWER(CONCAT('%',:1,'%'))
 
+    @Query(value = "SELECT * FROM account_details WHERE name ILIKE CONCAT('%',:pattern,'%') OR address ILIKE CONCAT('%',:pattern,'%') OR country ILIKE CONCAT('%',:pattern,'%') OR state ILIKE CONCAT('%',:pattern,'%') OR city ILIKE CONCAT('%',:pattern,'%')", nativeQuery = true)
+    List<Account> fetchBasedOn(@Param("pattern") String pattern);
     //Write a native query to read all accounts with an age lower than a specific value
 
 }
