@@ -15,21 +15,21 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "projects")
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Where(clause = "is_deleted=false")
-@AllArgsConstructor
 public class Project extends BaseEntity {
 
     @NotNull
     private String projectName;
     private String projectCode;
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "manager_name")
+    @JoinColumn(name = "manager_id")
     private User assignedManager;
 
-    @DateTimeFormat(pattern = "yy-MM-dd")
+    @Column(columnDefinition = "DATE")
     private LocalDate startDate;
-    @DateTimeFormat(pattern = "yy-MM-dd")
+    @Column(columnDefinition = "DATE")
     private LocalDate endDate;
 
     private String projectDetail;

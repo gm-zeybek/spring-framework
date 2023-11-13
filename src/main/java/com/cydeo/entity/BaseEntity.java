@@ -16,9 +16,13 @@ public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false,updatable = false)
     private LocalDateTime insertDateTime;
+    @Column(nullable = false,updatable = false)
     private Long insertUserId;
+    @Column(nullable = false)
     private LocalDateTime lastUpdateDateTime;
+    @Column(nullable = false)
     private Long lastUpdateUserId;
     private Boolean isDeleted=false; // isdeleted will use by all entities
 
@@ -28,6 +32,11 @@ public class BaseEntity {
         this.lastUpdateDateTime = LocalDateTime.now();
         this.insertUserId = 1L;
         this.lastUpdateUserId = 1l;
+    }
+    @PreUpdate // when update happens this initialize the fields
+    public void onPreUpdate(){
+        this.lastUpdateDateTime = LocalDateTime.now();
+        this.lastUpdateUserId = 1L;
     }
 
 }

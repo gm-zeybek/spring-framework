@@ -6,11 +6,12 @@ import java.util.List;
 
 public interface ProjectService {
 
-    List<ProjectDTO> findAll();
+    List<ProjectDTO> listAllProjects();
+    ProjectDTO getByProjectCode(Long source);
 
-    void save(ProjectDTO project);
+    void save(ProjectDTO dto);
 
-    ProjectDTO findById(Long source);
+    void update(ProjectDTO dto);
 
     void deleteById(String projectcode);
 

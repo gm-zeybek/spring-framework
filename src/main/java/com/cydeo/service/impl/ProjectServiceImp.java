@@ -5,14 +5,13 @@ import com.cydeo.entity.Project;
 import com.cydeo.mapper.ProjectMapper;
 import com.cydeo.repository.ProjectRepository;
 import com.cydeo.service.ProjectService;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class ProjectServiceImp implements ProjectService {
 
     private final ProjectRepository projectRepository;
@@ -25,7 +24,7 @@ public class ProjectServiceImp implements ProjectService {
     }
 
     @Override
-    public List<ProjectDTO> findAll() {
+    public List<ProjectDTO> listAllProjects() {
         return projectRepository.findAll().stream().map(projectMapper::convertDTO).collect(Collectors.toList());
     }
 
@@ -38,7 +37,12 @@ public class ProjectServiceImp implements ProjectService {
     }
 
     @Override
-    public ProjectDTO findById(Long source) {
+    public void update(ProjectDTO dto) {
+
+    }
+
+    @Override
+    public ProjectDTO getByProjectCode(Long source) {
        Project project = projectRepository.findById(source).get();
        return projectMapper.convertDTO(project);
     }
