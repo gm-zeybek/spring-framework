@@ -17,4 +17,8 @@ public interface UserService  {
     UserDTO update(UserDTO userDTO);
 
     void deleteByUserName(String userName);
+
+    void delete(String userName);
+
+    List<UserDTO> findManagers();
 }

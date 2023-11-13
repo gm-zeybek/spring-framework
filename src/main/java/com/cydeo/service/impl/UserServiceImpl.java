@@ -8,11 +8,13 @@ import com.cydeo.service.UserService;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 @Service
+@Transactional // it is for crud derive queries (@Modifying for @Query)
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -27,7 +29,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getAllUsers() {
-        List<User> userList = userRepository.findAll(Sort.by("firstName")); // repository method has properties
+//        List<User> userList = userRepository.findAllByIsDeletedIs(false); // repository method has properties
+        List<User> userList = userRepository.findAll(); // repository method has properties
         return userList.stream().map(userMapper::convertDTO).collect(Collectors.toList());
     }
 
@@ -61,6 +64,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteByUserName(String userName) {
-
+        userRepository.deleteByUserName(userName);
     }
+
+    @Override
+    public void delete(String userName) {
+        User user = userRepository.findByUserName(userName);
+        user.setIsDeleted(true);
+        userRepository.save(user);
+    }
+
+    @Override
+    public List<UserDTO> findManagers() {
+        return userRepository.findAll().stream()
+                .filter(user -> user.getRole().getDescription().equals("Manager"))
+                .map(userMapper::convertDTO)
+                .collect(Collectors.toList());
+    }
+
+
 }
