@@ -12,11 +12,6 @@ import org.springframework.stereotype.Component;
 public class ProjectDtoConverter implements Converter<String, ProjectDTO> {
 
 
-    @Override
-    public <U> Converter<String, U> andThen(Converter<? super ProjectDTO, ? extends U> after) {
-        return Converter.super.andThen(after);
-    }
-
     ProjectService projectService;
 
     //injection
@@ -31,7 +26,7 @@ public class ProjectDtoConverter implements Converter<String, ProjectDTO> {
             return null;
         }
 
-        return projectService.findById(Long.parseLong(source));
+        return projectService.getByProjectCode(source);
 
     }
 

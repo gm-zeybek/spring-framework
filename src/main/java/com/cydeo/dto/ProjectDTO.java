@@ -34,7 +34,7 @@ public class ProjectDTO {
     @NotBlank
     private String projectDetail;
 
-    private Status projectStatus=Status.OPEN;
+    private Status projectStatus;
 
     private int completeTaskCounts;
     private int unfinishedTaskCounts;

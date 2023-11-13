@@ -7,7 +7,7 @@ import java.util.List;
 public interface ProjectService {
 
     List<ProjectDTO> listAllProjects();
-    ProjectDTO getByProjectCode(Long source);
+    ProjectDTO getByProjectCode(String source);
 
     void save(ProjectDTO dto);
 

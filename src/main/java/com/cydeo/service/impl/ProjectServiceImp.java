@@ -2,6 +2,7 @@ package com.cydeo.service.impl;
 
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.entity.Project;
+import com.cydeo.enums.Status;
 import com.cydeo.mapper.ProjectMapper;
 import com.cydeo.repository.ProjectRepository;
 import com.cydeo.service.ProjectService;
@@ -25,15 +26,15 @@ public class ProjectServiceImp implements ProjectService {
 
     @Override
     public List<ProjectDTO> listAllProjects() {
-        return projectRepository.findAll().stream().map(projectMapper::convertDTO).collect(Collectors.toList());
+        return projectRepository.findAll().stream()
+                .map(projectMapper::convertDTO).collect(Collectors.toList());
     }
 
     @Override
-    public void save(ProjectDTO projectDTO) {
-
-
-        Project projectEntity = projectMapper.convertEntity(projectDTO);
-        projectRepository.save(projectEntity);
+    public void save(ProjectDTO dto) {
+        dto.setProjectStatus(Status.OPEN);
+        Project project = projectMapper.convertEntity(dto);
+        projectRepository.save(project);
     }
 
     @Override
@@ -42,9 +43,8 @@ public class ProjectServiceImp implements ProjectService {
     }
 
     @Override
-    public ProjectDTO getByProjectCode(Long source) {
-       Project project = projectRepository.findById(source).get();
-       return projectMapper.convertDTO(project);
+    public ProjectDTO getByProjectCode(String source) {
+        return projectMapper.convertDTO(projectRepository.findProjectByProjectCode(source));
     }
 
     @Override

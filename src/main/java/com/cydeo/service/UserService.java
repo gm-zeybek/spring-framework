@@ -20,5 +20,6 @@ public interface UserService  {
 
     void delete(String userName);
 
-    List<UserDTO> findManagers();
+    List<UserDTO> listAllByRole(String role); // we did generic code to use other places
+
 }

@@ -14,4 +14,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     void deleteByUserName(String userName);
 
+    List<User> findAllByRoleDescriptionIgnoringCase(String description);
+
 }

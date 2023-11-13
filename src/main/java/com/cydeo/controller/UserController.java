@@ -61,22 +61,22 @@ public class UserController {
 
     }
 
-    @PostMapping("/update")
-    public String updateUser( @ModelAttribute("user") UserDTO user, BindingResult bindingResult, Model model) {
-
-        if (bindingResult.hasErrors()) {
-
-            model.addAttribute("roles", roleService.getAllRoles());
-            model.addAttribute("users", userService.getAllUsers());
-
-            return "/user/update";
-
-        }
-
-        userService.update(user);
-        return "redirect:/user/create";
-
-    }
+//    @PostMapping("/update")
+//    public String updateUser( @ModelAttribute("user") UserDTO user, BindingResult bindingResult, Model model) {
+//
+//        if (bindingResult.hasErrors()) {
+//
+//            model.addAttribute("roles", roleService.getAllRoles());
+//            model.addAttribute("users", userService.getAllUsers());
+//
+//            return "/user/update";
+//
+//        }
+//
+//        userService.update(user);
+//        return "redirect:/user/create";
+//
+//    }
 
     @GetMapping("/delete/{username}")
     public String deleteUser(@PathVariable("username") String username) {
