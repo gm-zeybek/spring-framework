@@ -4,6 +4,7 @@ import com.cydeo.entity.Movie;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.util.unit.DataUnit;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
@@ -43,11 +44,19 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     // ------------------- Native QUERIES ------------------- //
 
     //Write a native query that returns a movie by name
+    @Query(value = "SELECT * FROM movie m WHERE m.name =?1", nativeQuery = true)
+    Optional<Movie> findAllByName(String name);
 
     //Write a native query that return the list of movies in a specific range of prices
+    @Query(value = "SELECT * FROM movie m WHERE m.price BETWEEN ?1 AND ?2", nativeQuery = true)
+    List<Movie> getMovieByPriceBetweenPrice(Double min, Double max);
 
     //Write a native query to return all movies where duration exists in the range of duration
+    @Query(value = "SELECT * FROM movie m WHERE m.duration IN ?1", nativeQuery = true)
+    List<Movie> getMovieByDurationBetween(List<Integer> listOfDuration);
 
     //Write a native query to list the top 5 most expensive movies
+    @Query(value = "SELECT * FROM movie m ORDER BY m.Price DESC LIMIT 5", nativeQuery = true)
+    List<Movie> getTop5ExpensiveMovie();
 
 }
