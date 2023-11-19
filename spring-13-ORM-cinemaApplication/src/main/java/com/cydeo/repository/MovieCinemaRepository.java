@@ -5,6 +5,7 @@ import com.cydeo.entity.Movie;
 import com.cydeo.entity.MovieCinema;
 import lombok.Data;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -40,11 +41,19 @@ public interface MovieCinemaRepository extends JpaRepository<MovieCinema, Long> 
     // ------------------- JPQL QUERIES ------------------- //
 
     //Write a JPQL query to list all movie cinemas with higher than a specific date
+    @Query("SELECT m FROM MovieCinema m WHERE m.dateTime > ?1")
+    List<MovieCinema> getAllBySortedBy(LocalDate date);
 
     // ------------------- Native QUERIES ------------------- //
 
     //Write a native query to count all movie cinemas by cinema id
+    @Query(value = "SELECT COUNT(*) FROM TABLE ( movie_cinema ) GROUP BY cinema_id",nativeQuery = true)
+    Integer countMovieCinemaById();
 
     //Write a native query that returns all movie cinemas by location name
+    @Query(value = "SELECT * FROM movie_cinema mc JOIN cinema c ON mc.cinema_id = c.id " +
+            "JOIN location l ON location_id=l.id " +
+            "WHERE l.name = ?1",nativeQuery = true)
+    List<MovieCinema> getAllByCinema_Location();
 
 }
