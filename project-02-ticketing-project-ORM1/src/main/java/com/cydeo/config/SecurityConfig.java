@@ -32,8 +32,27 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-       return httpSecurity
+        return httpSecurity
                 .authorizeRequests()
+                .antMatchers(
+                        "/user/**"
+                ).hasRole("ADMIN")
+                .antMatchers(
+                        "/project/**"
+                ).hasRole("MANAGER")
+                .antMatchers(
+                        "/task/employee/**"
+                ).hasRole("EMPLOYEE")
+                .antMatchers(
+                        "/task/**" // THIS ALSO WORKS
+                ).hasRole("MANAGER")
+                .antMatchers(
+                        "/task/**"
+                ).hasAuthority("ROLE_EMPLOYEE")   // THIS REQUIRES ROLE PREFIX
+//               .antMatchers(
+//                       "/task/**" // THIS ALSO WORKS
+//               ).hasAnyRole("EMPLOYEE", "ADMIN") // THIS ACCEPTS MORE THAN ONE ROLE
+
                 .antMatchers(
                         "/",
                         "/login",
@@ -45,7 +64,12 @@ public class SecurityConfig {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic()
+//                .httpBasic()
+                .formLogin()
+                    .loginPage("/login")
+                    .successForwardUrl("/welcome")
+                    .failureUrl("/login?error=true")
+                    .permitAll()
                 .and().build();
 
     }
