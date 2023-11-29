@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,18 +35,16 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .authorizeRequests()
-                .antMatchers(
-                        "/user/**"
-                ).hasRole("ADMIN")
+                .antMatchers("/user/**").hasAuthority("Admin")
                 .antMatchers(
                         "/project/**"
-                ).hasRole("MANAGER")
+                ).hasAuthority("Manager")
                 .antMatchers(
                         "/task/employee/**"
-                ).hasRole("EMPLOYEE")
+                ).hasAuthority("Employee")
                 .antMatchers(
                         "/task/**" // THIS ALSO WORKS
-                ).hasRole("MANAGER")
+                ).hasAuthority("Manager")
                 .antMatchers(
                         "/task/**"
                 ).hasAuthority("ROLE_EMPLOYEE")   // THIS REQUIRES ROLE PREFIX
@@ -70,6 +69,10 @@ public class SecurityConfig {
                     .successForwardUrl("/welcome")
                     .failureUrl("/login?error=true")
                     .permitAll()
+                .and()
+                        .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login")
                 .and().build();
 
     }
