@@ -14,15 +14,16 @@ public class DataGenerator implements CommandLineRunner {
     private final CinemaRepository cinemaRepository;
     private final MovieRepository movieRepository;
     private final MovieCinemaRepository movieCinemaRepository;
-//    private final TicketRepository ticketRepository;
+    private final TicketRepository ticketRepository;
     private final GenreRepository genreRepository;
     private final UserRepository userRepository;
 
-    public DataGenerator(AccountRepository accountRepository, CinemaRepository cinemaRepository, MovieRepository movieRepository, MovieCinemaRepository movieCinemaRepository, GenreRepository genreRepository, UserRepository userRepository) {
+    public DataGenerator(AccountRepository accountRepository, CinemaRepository cinemaRepository, MovieRepository movieRepository, MovieCinemaRepository movieCinemaRepository, TicketRepository ticketRepository, GenreRepository genreRepository, UserRepository userRepository) {
         this.accountRepository = accountRepository;
         this.cinemaRepository = cinemaRepository;
         this.movieRepository = movieRepository;
         this.movieCinemaRepository = movieCinemaRepository;
+        this.ticketRepository = ticketRepository;
         this.genreRepository = genreRepository;
         this.userRepository = userRepository;
     }
@@ -34,9 +35,9 @@ public class DataGenerator implements CommandLineRunner {
         System.out.println(accountRepository.getAllAdminAccounts());
         System.out.println(cinemaRepository.getDistinctBySponsoredName());
         System.out.println(movieRepository.getAllMovieNames());
-//        System.out.println(movieCinemaRepository.countAllByCinemaId(20L));
-//        System.out.println(movieCinemaRepository.getAllByCinema_Location_Name("AMC Empire 25"));
-//        System.out.println(ticketRepository.countTicketsByUserAccountEmail(4L));
+        System.out.println(movieCinemaRepository.findAll());
+        System.out.println(movieCinemaRepository.groupMovieCinemaById());
+        System.out.println(ticketRepository.findAll());
 //        System.out.println(ticketRepository.getTicketsByDateBetween(LocalDateTime.now().minusDays(1000), LocalDateTime.now()));
 //        System.out.println(ticketRepository.retrieveAllBySearchCriteria("it"));
         System.out.println(genreRepository.fetchAll());
