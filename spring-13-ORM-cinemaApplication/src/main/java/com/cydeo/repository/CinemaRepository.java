@@ -16,7 +16,7 @@ public interface CinemaRepository extends JpaRepository<Cinema, Long> {
 
     //Write a derived query to get cinema with a specific name
     // to make sure not null pointer exception we use optional class
-    Optional<Cinema> getCinemaByNameIs(String name);
+    Optional<Cinema> getCinemaByName(String name);
 
     //Write a derived query to read sorted the top 3 cinemas that contains a specific sponsored name
     List<Cinema> getTop3BySponsoredNameContainingOrderBySponsoredName(String sponsoredName);
@@ -51,4 +51,6 @@ public interface CinemaRepository extends JpaRepository<Cinema, Long> {
     //Write a native query to distinct all cinemas by sponsored name
     @Query(value = "SELECT DISTINCT sponsored_name FROM cinema", nativeQuery = true)
     List<String> getDistinctBySponsoredName();
+
+
 }

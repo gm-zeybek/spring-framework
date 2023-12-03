@@ -72,6 +72,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query(value = "SELECT * FROM account_details WHERE name ILIKE CONCAT('%',:pattern,'%') OR address ILIKE CONCAT('%',:pattern,'%') OR country ILIKE CONCAT('%',:pattern,'%') OR state ILIKE CONCAT('%',:pattern,'%') OR city ILIKE CONCAT('%',:pattern,'%')", nativeQuery = true)
     List<Account> fetchBasedOn(@Param("pattern") String pattern);
+
     //Write a native query to read all accounts with an age lower than a specific value
 
 }

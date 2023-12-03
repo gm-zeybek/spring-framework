@@ -15,7 +15,7 @@ import lombok.Setter;
 public class Cinema extends BaseEntity {
     private String name;
     private String sponsoredName;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Location location;
 
     @Override

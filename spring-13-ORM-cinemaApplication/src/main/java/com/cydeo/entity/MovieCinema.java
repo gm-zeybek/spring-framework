@@ -20,9 +20,9 @@ public class MovieCinema extends BaseEntity {
 
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime dateTime;
-    @ManyToOne(fetch = FetchType.LAZY)  // it is preferable way no need to declare again oneToMany other side
+    @ManyToOne(fetch = FetchType.EAGER)  // it is preferable way no need to declare again oneToMany other side
     private Movie movie;
-    @ManyToOne(fetch = FetchType.LAZY)  // default fetch type differentiate based on type many or one
+    @ManyToOne(fetch = FetchType.EAGER)  // default fetch type differentiate based on type many or one
     private Cinema cinema;
 
     @Override
