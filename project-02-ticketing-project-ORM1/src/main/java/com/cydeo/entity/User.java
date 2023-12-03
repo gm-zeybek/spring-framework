@@ -24,7 +24,7 @@ public class User extends BaseEntity {
     private String passWord;
     private boolean enabled;
     private String phone;
-    @ManyToOne(fetch = FetchType.LAZY) // many users can be same role
+    @ManyToOne // many users can be same role
     @JoinColumn(name = "role_id") // not mandatory optional
     private Role role;
     @Enumerated(EnumType.STRING)
