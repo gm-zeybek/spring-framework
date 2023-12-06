@@ -15,7 +15,8 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Table(name = "account_details")
-@JsonIgnoreProperties(value = {"state","postalCode"}, ignoreUnknown = true) // or class level
+//@JsonIgnoreProperties(value = {"state","postalCode"}, ignoreUnknown = true) // or class level
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer"}, ignoreUnknown = true)
 public class Account extends BaseEntity {
 
     private String name;
