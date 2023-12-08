@@ -16,7 +16,6 @@ public class Consume_FeignClient {
         this.userClient = userClient;
     }
 
-
     @GetMapping("/api/v1/users")
     ResponseEntity<ResponseWrapper> getUsers(){
         return ResponseEntity.ok(new ResponseWrapper("user data retrieved", userClient.getUsers()));
