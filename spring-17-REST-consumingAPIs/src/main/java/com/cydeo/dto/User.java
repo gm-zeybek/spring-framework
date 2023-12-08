@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "id",
-    "name",
-    "username",
-    "email",
-    "address",
-    "phone",
-    "website",
-    "company"
+        "id",
+        "name",
+        "username",
+        "email",
+        "address",
+        "phone",
+        "website",
+        "company"
 })
 public class User {
 
