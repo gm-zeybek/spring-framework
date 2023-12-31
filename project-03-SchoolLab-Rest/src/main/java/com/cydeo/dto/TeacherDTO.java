@@ -14,10 +14,12 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+// TODO: TO REMOVE NON-NULL VALUE FROM PAYLOAD
 @JsonInclude(JsonInclude.Include.NON_NULL)
+// TODO: TO AVOID FAILING DUE TO UNKNOWN FIELD IN PAYLOAD
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TeacherDTO {
-
+    // TODO: TO IGNORE A FIELD FOR ALL REQUEST
     @JsonIgnore
     private Long id;
 
@@ -27,6 +29,7 @@ public class TeacherDTO {
 
     private String email;
     private String username;
+    // TODO: TO AVOID PASSWORD DISPLAYING ON RECEIVING PAYLOAD
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private LocalDate birthday;
@@ -34,7 +37,7 @@ public class TeacherDTO {
     private Status status;
 
     private EducationLevel educationLevel;
-
+    // TODO: TO AVOID RECURSIVE CALL AMONG OTHER OBJECT
     @JsonManagedReference(value = "teacher-address-reference")
     private AddressDTO address;
 

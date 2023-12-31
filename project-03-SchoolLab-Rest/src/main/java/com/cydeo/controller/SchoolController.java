@@ -4,8 +4,6 @@ import com.cydeo.dto.ResponseWrapper;
 import com.cydeo.dto.TeacherDTO;
 import com.cydeo.service.StudentService;
 import com.cydeo.service.TeacherService;
-import com.sun.net.httpserver.Authenticator;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,13 +28,13 @@ public class SchoolController {
         return teacherService.findAll();
     }
 
-    // write a endpoint which returns all students with using wrapper class
-    // with speacific message and 200 status code and
+    // TODO: (WRAPPER CLASS) Add a controller method which hits /students endpoint with specific message "students are successfully retrieved" and status code 200 and success true
+
     @GetMapping("/students")
-    public ResponseEntity<ResponseWrapper> getStudents(){
-        return ResponseEntity
-                .status(200)
-                .body(new ResponseWrapper("students are successfully retrieved", studentService.findAll()));
+    public ResponseEntity<ResponseWrapper> getAllStudents(){
+        return ResponseEntity.ok(new ResponseWrapper(
+                "students are successfully retrieved",
+                studentService.findAll()));
     }
 
 }
