@@ -1,19 +1,25 @@
 package com.cydeo.controller;
 
-import com.cydeo.dto.AddressDTO;
-import com.cydeo.dto.ResponseWrapper;
-import com.cydeo.dto.TeacherDTO;
+import com.cydeo.client.EmployeeClient;
+import com.cydeo.client.WeatherClient;
+import com.cydeo.dto.*;
 import com.cydeo.service.AddressService;
 import com.cydeo.service.ParentService;
 import com.cydeo.service.StudentService;
 import com.cydeo.service.TeacherService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class SchoolController {
@@ -24,14 +30,19 @@ public class SchoolController {
     private final StudentService studentService;
     private final ParentService parentService;
     private final AddressService addressService;
+    private final WeatherClient weatherClient;
+    private final EmployeeClient employeeClient;
 
 
-    public SchoolController(TeacherService teacherService, StudentService studentService, ParentService parentService, AddressService addressService) {
+    public SchoolController(TeacherService teacherService, StudentService studentService, ParentService parentService, AddressService addressService, WeatherClient weatherClient, EmployeeClient employeeClient) {
         this.teacherService = teacherService;
         this.studentService = studentService;
         this.parentService = parentService;
         this.addressService = addressService;
+        this.weatherClient = weatherClient;
+        this.employeeClient = employeeClient;
     }
+
 
     @GetMapping("/teachers")
     public List<TeacherDTO> allTeachers(){
@@ -122,13 +133,41 @@ public class SchoolController {
      *     }
      * }
      */
-    @GetMapping("/address/{id}")
-    public ResponseEntity<ResponseWrapper> getAddressDetails(@PathVariable("id") Long id) throws Exception {
-        AddressDTO addressDTO = addressService.findById(id);
+//    @GetMapping("/address/{id}")
+//    public ResponseEntity<ResponseWrapper> getAddressDetails(@PathVariable("id") Long id) throws Exception {
+//        AddressDTO addressDTO = addressService.findById(id);
+//
+//        ResponseWrapper responseWrapper = new ResponseWrapper(200,true,"address is " + id + " successfully retrieved",addressService.findById(id));
+//        // this time 2 nd constructor is used with original DTO
+//        return ResponseEntity.ok(new ResponseWrapper("address " + id + " is successfully retrieved",addressDTO));
+//    }
 
-        ResponseWrapper responseWrapper = new ResponseWrapper(200,true,"address is " + id + " successfully retrieved",addressService.findById(id));
-        // this time 2 nd constructor is used with original DTO
-        return ResponseEntity.ok(new ResponseWrapper("address " + id + " is successfully retrieved",addressDTO));
+    // TODO: Retrieve live current temperature from 'http://api.weatherstack.com/current' and update address call
+//    @GetMapping("/address/{id}")
+//    public ResponseEntity<ResponseWrapper> getAddressWithLiveData(@PathVariable("id") Long id) throws Exception {
+//        AddressDTO addressDTO = addressService.findById(id);
+//
+//        CityWeather current = weatherClient.getCurrent(addressDTO.getCity());
+//        addressDTO.setCurrentTemperature(current.getCurrent().getTemperature());
+//
+//        return ResponseEntity.ok(new ResponseWrapper(200,true,"retrieved successfully",addressDTO));
+//
+//    }
+
+    @GetMapping("/london")
+    public ResponseEntity<ResponseWrapper> getAddressWithLiveData() throws Exception {
+
+        Map<String,String> headers = new HashMap<>();
+
+        headers.put("access_key","95698ea2e7ce9a4e6e65a716d337ce86");
+//        headers.put("query","london");
+
+
+        return ResponseEntity.ok(new ResponseWrapper(200,true,"successfully",weatherClient.getCurrent(headers)));
+
+
     }
+
+
 
 }
