@@ -1,6 +1,7 @@
 package com.cydeo.service;
 
 import com.cydeo.dto.AddressDTO;
+import com.cydeo.dto.WeatherStack;
 
 import java.util.List;
 

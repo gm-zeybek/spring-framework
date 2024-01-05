@@ -39,6 +39,6 @@ public class TeacherDTO {
     private EducationLevel educationLevel;
     // TODO: TO AVOID RECURSIVE CALL AMONG OTHER OBJECT
     @JsonManagedReference(value = "teacher-address-reference")
-    private AddressDTO address;
+    private WeatherStack address;
 
 }

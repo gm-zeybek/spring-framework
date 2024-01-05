@@ -6,21 +6,18 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "type",
-        "query",
-        "language",
-        "unit"
+        "request",
+        "location",
+        "current"
 })
 @Generated("jsonschema2pojo")
-public class Request {
+public class WeatherStack {
 
-    @JsonProperty("type")
-    public String type;
-    @JsonProperty("query")
-    public String query;
-    @JsonProperty("language")
-    public String language;
-    @JsonProperty("unit")
-    public String unit;
+    @JsonProperty("request")
+    public Request request;
+    @JsonProperty("location")
+    public Location location;
+    @JsonProperty("current")
+    public Current current;
 
 }
