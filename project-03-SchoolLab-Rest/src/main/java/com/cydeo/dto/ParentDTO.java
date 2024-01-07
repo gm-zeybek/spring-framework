@@ -33,6 +33,6 @@ public class ParentDTO {
 
     private Status status;
     @JsonManagedReference(value = "parent-address-reference")
-    private WeatherStack address;
+    private AddressDTO address;
 
 }

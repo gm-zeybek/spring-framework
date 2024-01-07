@@ -5,17 +5,18 @@ import com.cydeo.dto.AddressDTO;
 import com.cydeo.dto.WeatherStack;
 import com.cydeo.dto.ResponseWrapper;
 import com.cydeo.dto.TeacherDTO;
+import com.cydeo.entity.Teacher;
 import com.cydeo.service.AddressService;
 import com.cydeo.service.ParentService;
 import com.cydeo.service.StudentService;
 import com.cydeo.service.TeacherService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,22 +31,17 @@ public class SchoolController {
     private final StudentService studentService;
     private final ParentService parentService;
     private final AddressService addressService;
-    private final WeatherClient weatherClient;
 
-    @Value("${weatherstack.access_key}")
-    private String access_key;
-
-    public SchoolController(TeacherService teacherService, StudentService studentService, ParentService parentService, AddressService addressService, WeatherClient weatherClient) {
+    public SchoolController(TeacherService teacherService, StudentService studentService, ParentService parentService, AddressService addressService) {
         this.teacherService = teacherService;
         this.studentService = studentService;
         this.parentService = parentService;
         this.addressService = addressService;
-        this.weatherClient = weatherClient;
     }
 
 
     @GetMapping("/teachers")
-    public List<TeacherDTO> allTeachers(){
+    public List<TeacherDTO> allTeachers() {
         return teacherService.findAll();
     }
 
@@ -72,7 +68,7 @@ public class SchoolController {
     },
      */
     @GetMapping("/students")
-    public ResponseEntity<ResponseWrapper> getAllStudents(){
+    public ResponseEntity<ResponseWrapper> getAllStudents() {
         return ResponseEntity.ok(new ResponseWrapper(
                 "students are successfully retrieved",
                 studentService.findAll()));
@@ -104,7 +100,7 @@ public class SchoolController {
         },
      */
     @GetMapping("/parents")
-    public ResponseEntity<ResponseWrapper> getAllParents(){
+    public ResponseEntity<ResponseWrapper> getAllParents() {
 
         ResponseWrapper responseWrapper = new ResponseWrapper(
                 202,
@@ -121,24 +117,47 @@ public class SchoolController {
 
     /**
      * {
-     *     "code": 200,
-     *     "success": true,
-     *     "message": "address1 is successfully retrieved",
-     *     "data": {
-     *         "street": "Str. Garibaldi",
-     *         "country": "United Kingdom",
-     *         "city": "London",
-     *         "postalCode": "10000",
-     *         "addressType": "TEACHER"
-     *     }
+     * "code": 200,
+     * "success": true,
+     * "message": "address1 is successfully retrieved",
+     * "data": {
+     * "street": "Str. Garibaldi",
+     * "country": "United Kingdom",
+     * "city": "London",
+     * "postalCode": "10000",
+     * "addressType": "TEACHER"
+     * }
      * }
      */
-   // homework
+    // homework
     @GetMapping("/address/{id}")
     public ResponseEntity<ResponseWrapper> getAddressDetails(@PathVariable("id") Long id) throws Exception {
         AddressDTO addressDTO = addressService.findById(id);
-        WeatherStack weatherStack = weatherClient.getCurrent(access_key, addressDTO.getCity());
-        addressDTO.setCurrentTemperature(weatherStack.current.temperature);
-        return ResponseEntity.ok(new ResponseWrapper(200,true,"retrieved successfully",addressDTO));
+        return ResponseEntity.ok(new ResponseWrapper(200, true, "retrieved successfully", addressDTO));
+    }
+
+    @PutMapping(value = "address/{id}", consumes = {"*/*"})
+    public AddressDTO updateAddress(@PathVariable("id") Long id, @RequestBody AddressDTO addressDTO) throws Exception {
+        addressDTO.setId(id);
+        AddressDTO updateAdress = addressService.update(addressDTO);
+        return updateAdress;
+    }
+
+
+
+
+
+
+    @PostMapping("/teachers")
+    public ResponseEntity<ResponseWrapper> createTeacher(@Valid @RequestBody TeacherDTO teacherDTO){
+        TeacherDTO teacher = teacherService.createTeacher(teacherDTO);
+
+        ResponseWrapper responseWrapper = new ResponseWrapper(HttpStatus.CREATED.value(),true,"Teacher is created."
+                ,teacher);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .header("teacherId",String.valueOf(teacher.getId()))
+                .body(responseWrapper);
+
     }
 }

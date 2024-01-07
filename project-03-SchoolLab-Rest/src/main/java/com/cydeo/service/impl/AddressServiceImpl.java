@@ -1,11 +1,15 @@
 package com.cydeo.service.impl;
 
+import com.cydeo.client.WeatherClient;
 import com.cydeo.dto.AddressDTO;
 import com.cydeo.dto.WeatherStack;
 import com.cydeo.entity.Address;
+import com.cydeo.exception.NotFoundException;
 import com.cydeo.util.MapperUtil;
 import com.cydeo.repository.AddressRepository;
 import com.cydeo.service.AddressService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +19,14 @@ import java.util.stream.Collectors;
 @Service
 public class AddressServiceImpl implements AddressService {
 
+    @Value("${access_key}")
+    private String access_key;
+    private final WeatherClient weatherClient;
     private final AddressRepository addressRepository;
     private final MapperUtil mapperUtil;
 
-    public AddressServiceImpl(AddressRepository addressRepository, MapperUtil mapperUtil) {
+    public AddressServiceImpl(WeatherClient weatherClient, AddressRepository addressRepository, MapperUtil mapperUtil) {
+        this.weatherClient = weatherClient;
         this.addressRepository = addressRepository;
         this.mapperUtil = mapperUtil;
     }
@@ -34,8 +42,10 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public AddressDTO findById(Long id) throws Exception {
         Address foundAddress = addressRepository.findById(id)
-                .orElseThrow(() -> new Exception("No Address Found!"));
-        return mapperUtil.convert(foundAddress, new AddressDTO());
+                .orElseThrow(() -> new NotFoundException("No Address Found!"));
+        AddressDTO addressDTO = mapperUtil.convert(foundAddress, new AddressDTO());
+        addressDTO.setCurrentTemperature(weatherClient.getCurrentTemperature(access_key,addressDTO.getCity()).current.temperature);
+        return addressDTO;
     }
 
     @Override

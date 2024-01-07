@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface WeatherClient {
     // TODO: FINALLY ADD RELATED HEADERS AND QUERY OR PATH PARAMS
     @GetMapping()
-    WeatherStack getCurrent(@RequestParam("access_key") String access_key, @RequestParam("query") String city);
+    WeatherStack getCurrentTemperature(@RequestParam("access_key") String access_key, @RequestParam("query") String city);
 }
