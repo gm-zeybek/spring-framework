@@ -1,14 +1,9 @@
 package com.cydeo.dto;
 
 import com.cydeo.enums.AddressType;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.*;
+import lombok.*;
+
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 @Getter
@@ -27,6 +22,7 @@ public class AddressDTO {
     @NotBlank(message = "Country cannot be empty.")
     @Size(min = 1, max = 50, message = "Country should be between 1 and 50 characters.")
     private String country;
+    private String flagPngUrl;
 
     //@NotBlank(message = "State cannot be empty.")
     @Size(min = 1, max = 50, message = "State should be between 1 and 50 characters.")
@@ -39,6 +35,7 @@ public class AddressDTO {
     @NotBlank(message = "Postal code cannot be empty.")
     @Pattern(regexp = "\\d{5}", message = "Postal code should be 5 digits long.")
     private String postalCode;
+
 
     private String flag;
 

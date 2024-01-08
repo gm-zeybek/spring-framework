@@ -1,8 +1,10 @@
 package com.cydeo.service.impl;
 
+import com.cydeo.client.CountryClient;
 import com.cydeo.client.WeatherClient;
 import com.cydeo.dto.AddressDTO;
 import com.cydeo.dto.WeatherStack;
+import com.cydeo.dto.country.Country;
 import com.cydeo.entity.Address;
 import com.cydeo.exception.NotFoundException;
 import com.cydeo.util.MapperUtil;
@@ -22,11 +24,13 @@ public class AddressServiceImpl implements AddressService {
     @Value("${access_key}")
     private String access_key;
     private final WeatherClient weatherClient;
+    private final CountryClient countryClient;
     private final AddressRepository addressRepository;
     private final MapperUtil mapperUtil;
 
-    public AddressServiceImpl(WeatherClient weatherClient, AddressRepository addressRepository, MapperUtil mapperUtil) {
+    public AddressServiceImpl(WeatherClient weatherClient, CountryClient countryClient, AddressRepository addressRepository, MapperUtil mapperUtil) {
         this.weatherClient = weatherClient;
+        this.countryClient = countryClient;
         this.addressRepository = addressRepository;
         this.mapperUtil = mapperUtil;
     }
@@ -44,8 +48,26 @@ public class AddressServiceImpl implements AddressService {
         Address foundAddress = addressRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("No Address Found!"));
         AddressDTO addressDTO = mapperUtil.convert(foundAddress, new AddressDTO());
-        addressDTO.setCurrentTemperature(weatherClient.getCurrentTemperature(access_key,addressDTO.getCity()).current.temperature);
+        addressDTO.setCurrentTemperature(getCurrentTemperature(addressDTO.getCity()));
+        String countryFlags = getCountryFlags(addressDTO.getCountry());
+        addressDTO.setFlagPngUrl(countryFlags);
         return addressDTO;
+    }
+
+    String getCountryFlags(String country){
+        Country[] countries = countryClient.getFlags(country);
+        if (countries[0] == null || countries[0].flags == null) {
+            return null;
+        }
+       return countries[0].flags.png;
+    }
+
+    Integer getCurrentTemperature(String city){
+        WeatherStack weatherStack = weatherClient.getCurrentTemperature(access_key, city);
+        if(weatherStack == null || weatherStack.current == null) {
+            return null;
+        }
+        return weatherStack.current.temperature;
     }
 
     @Override
